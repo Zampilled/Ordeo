@@ -1,0 +1,14 @@
+13/03/22 Todo list
+
+
+n - sort out git
+n - quantity changer
+n - checkout api
+n - checkout frontend
+n - admin backend
+n - register backend
+n - register - frontend
+n - account screen
+n - order management backend
+n - order screen
+n - pretty clean up
