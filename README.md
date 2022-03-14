@@ -1,6 +1,6 @@
 # **Ordero**
 
-> A stocking full stack app using React/Redux/Django
+> An inventory stocking full stack app using React/Redux/Django
 
 
 ## Quick Start
