@@ -38,6 +38,41 @@ class UpdateCartAPI(generics.GenericAPIView):
 
     serializer_class = CartItemSerializer
 
+    def patch(self, request):
+        serializer = AddProductSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        product = get_object_or_404(Product, pk=data['id'])
+        quantity = data['quantity']
+        cart_product, created = CartItem.objects.get_or_create(
+            product=product,
+            owner=self.request.user,
+            ordered=False,
+            name=product.name,
+            price=product.price,
+            image=product.image,
+            description=product.description,
+
+
+        )
+        cart_qs = Cart.objects.filter(owner=self.request.user, ordered=False)
+        if cart_qs.exists():
+            cart = cart_qs[0]
+            if cart.products.filter(product__pk=product.pk).exists():
+                cart_product.quantity = quantity
+                cart_product.save()
+                return Response({"message": "Quantity updated",
+                                 },
+                                status=status.HTTP_200_OK
+                                )
+            else:
+                return Response({"message": "Product doesnt exist",
+                                 },
+                                status=status.HTTP_400_BAD_REQUEST
+                                )
+
+
+
     def post(self, request):
         serializer = AddProductSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -77,6 +112,7 @@ class UpdateCartAPI(generics.GenericAPIView):
         else:
 
             cart = Cart.objects.create(owner=self.request.user)
+            cart_product.quantity = quantity
             cart.products.add(cart_product)
             return Response({"message": "Order is created & Item added to your cart", },
                             status=status.HTTP_200_OK,)

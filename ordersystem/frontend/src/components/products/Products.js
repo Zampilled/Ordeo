@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {deleteProduct, getProducts} from "../../actions/products";
-import {updateCart} from "../../actions/carts";
+import {deleteProduct, getProducts } from "../../actions/products";
+import {addToCart} from "../../actions/carts";
 
 export class Products extends Component {
     static propTypes = {
         products : PropTypes.array.isRequired,
         getProducts: PropTypes.func.isRequired,
         deleteProduct: PropTypes.func.isRequired,
-        updateCart: PropTypes.func.isRequired,
+        addToCart: PropTypes.func.isRequired,
     };
     state = {
         TheCart: []
@@ -44,7 +44,7 @@ export class Products extends Component {
             let id, quantity  = 0;
             id = TheCart[i].id;
             quantity = TheCart[i].quantity;
-            this.props.updateCart(id,quantity);
+            this.props.addToCart(id,quantity);
         }
         this.setState({
             TheCart: []
@@ -114,4 +114,4 @@ const mapStatetoProps = state => ({
 
 })
 
-export default connect(mapStatetoProps, { getProducts, deleteProduct, updateCart})(Products);
+export default connect(mapStatetoProps, { getProducts, deleteProduct, addToCart})(Products);

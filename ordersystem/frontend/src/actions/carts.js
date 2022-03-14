@@ -2,7 +2,7 @@ import axios from "axios";
 import {createMessage, returnErrors} from "./messages";
 import {tokenConfig} from "./auth";
 
-import {DELETE_CART_ITEM, GET_CART, UPDATE_CART} from "./types";
+import {DELETE_CART_ITEM, GET_CART, UPDATE_CART, ADD_TO_CART} from "./types";
 
 // GET CART
 
@@ -19,14 +19,33 @@ export const getCart = () =>(dispatch, getState) =>{
 
 }
 
-//Update Cart
+//Add to Cart
 
-export const updateCart = (id, quantity) =>(dispatch, getState) =>{
+export const addToCart = (id, quantity) =>(dispatch, getState) =>{
     const body = JSON.stringify({id,quantity});
     axios.post('/api/orderitem',body, tokenConfig(getState))
 
         .then(res=>{
             dispatch(createMessage({productCreated: "Products Added"}));
+            console.log(res)
+            //dispatch(createMessage({productCreated: "Added to Cart"}));
+            dispatch({
+                type: ADD_TO_CART,
+                payload: res.data
+
+            });
+        }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
+
+}
+
+// Update Cart
+
+export const updateCart = (id, quantity) =>(dispatch, getState) =>{
+    const body = JSON.stringify({id,quantity});
+    axios.patch('/api/orderitem',body, tokenConfig(getState))
+
+        .then(res=>{
+            dispatch(createMessage({productCreated: "Quantities Changed"}));
             console.log(res)
             //dispatch(createMessage({productCreated: "Added to Cart"}));
             dispatch({
@@ -41,7 +60,6 @@ export const updateCart = (id, quantity) =>(dispatch, getState) =>{
 //Delete Cart Item
 
 export const deleteCartItem = (id) =>(dispatch, getState) =>{
-    const body = JSON.stringify({id});
     axios.put('/api/orderitem',{id},tokenConfig(getState) )
         .then(res=>{
             console.log({id})
