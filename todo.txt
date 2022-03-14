@@ -1,7 +1,7 @@
 13/03/22 Todo list
 
 
-n - sort out git
+y - sort out git
 n - quantity changer
 n - checkout api
 n - checkout frontend
