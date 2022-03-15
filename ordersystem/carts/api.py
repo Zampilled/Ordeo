@@ -61,7 +61,7 @@ class UpdateCartAPI(generics.GenericAPIView):
             if cart.products.filter(product__pk=product.pk).exists():
                 cart_product.quantity = quantity
                 cart_product.save()
-                return Response({"message": "Quantity updated",
+                return Response({"message": "Quantity Updated"
                                  },
                                 status=status.HTTP_200_OK
                                 )

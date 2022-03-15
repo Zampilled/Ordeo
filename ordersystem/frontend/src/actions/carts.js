@@ -45,12 +45,13 @@ export const updateCart = (id, quantity) =>(dispatch, getState) =>{
     axios.patch('/api/orderitem',body, tokenConfig(getState))
 
         .then(res=>{
+            //this.setState(getCart())
             dispatch(createMessage({productCreated: "Quantities Changed"}));
             console.log(res)
             //dispatch(createMessage({productCreated: "Added to Cart"}));
             dispatch({
                 type: UPDATE_CART,
-                payload: res.data
+
 
             });
         }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));

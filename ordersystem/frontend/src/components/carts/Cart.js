@@ -26,27 +26,32 @@ export class Cart extends Component {
         TheValues["quantity"]= e.target.value;
         let index = TheCart.findIndex(obj => obj.id === i)
         if (index === -1){
-            TheCart.push({"id":TheValues.id , "quantity":e.target.placeholder})
+            TheCart.push({"id":TheValues.id , "quantity":TheValues.quantity})
         }
         else {
             TheCart[index].quantity = e.target.value;
         }
         this.setState({TheCart})
-        console.log(this.state)
+        console.log(this.state.TheCart)
     }
     onSubmit(e) {
         console.log("submit")
         let TheCart = JSON.parse(JSON.stringify(this.state.TheCart))
-        console.log(TheCart)
+
         for(let i = 0; i<TheCart.length;i++ ){
             let id, quantity  = 0;
             id = TheCart[i].id;
             quantity = TheCart[i].quantity;
+
             this.props.updateCart(id,quantity);
         }
+        console.log(this.state.TheCart)
         this.setState({
-            TheCart: []
+            TheCart: [],
+
         });
+
+
     }
 
 
@@ -82,7 +87,7 @@ export class Cart extends Component {
                                 type = "number"
                                 placeholder={cart.quantity}
                                 value={quantity}
-                                onChange={e => this.onChange(cart.id,e)}
+                                onChange={e => this.onChange(cart.product,e)}
                                 />
                             </td>
                             <td>${Math.round(cart.subtotal) }</td>
@@ -102,13 +107,10 @@ export class Cart extends Component {
                     <label className="label label-danger m-auto fa-bold">Total: ${Math.round(this.props.carts.total)}</label>
                     <form onSubmit={e => this.onSubmit(e)}>
                         <div className="text-end m-auto">
-                            <button type="submit" className="btn btn-primary"  >Quantity</button>
+                            <button type="submit" className="btn btn-primary" >Quantity</button>
                         </div>
                     </form>
-
                 </div>
-
-
             </div>
 
         );

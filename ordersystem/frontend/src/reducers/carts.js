@@ -11,7 +11,7 @@ export default function (state = initialState, action){
             return {
                 ...state,
                 carts: action.payload[0],
-                prod : action.payload[0].products
+                prod : action.payload[0].products,
 
             };
         case ADD_TO_CART:
@@ -22,7 +22,9 @@ export default function (state = initialState, action){
         case UPDATE_CART:
             return{
                 ...state,
-                carts:[...state.carts, action.payload]
+                carts:[...state.carts, action.payload],
+
+
             };
         case DELETE_CART_ITEM:
             return {
