@@ -1,4 +1,4 @@
-# **Ordero**
+# **Ordeo**
 
 > An inventory ordering full stack app using React/Redux/Django
 

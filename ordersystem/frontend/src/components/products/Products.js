@@ -51,7 +51,7 @@ export class Products extends Component {
     render() {
         const {quantity} = this.state
         const adminProducts = (
-            <div className="rounded shadow ">
+            <div className="rounded shadow mt-2">
                 <table className="table table-sm table-hover tab align-middle ">
                     <thead>
                     <tr>

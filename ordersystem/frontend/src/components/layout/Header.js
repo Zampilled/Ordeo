@@ -57,7 +57,7 @@ export class Header extends Component{
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container">
                             <div className="collapse navbar-collapse" id="navbarColor03">
-                                <a className="navbar-brand" href="#">Order System</a>
+                                <a className="navbar-brand" href="#">Ordeo</a>
                             </div>
                             {isAdmin? adminLinks :isAuthenticated ? authLinks: guestLinks}
                 </div>
