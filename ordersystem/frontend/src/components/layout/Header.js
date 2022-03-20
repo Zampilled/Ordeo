@@ -11,7 +11,21 @@ export class Header extends Component{
     }
 
     render() {
-        const { isAuthenticated, user} = this.props.auth;
+        const { isAdmin, isAuthenticated, user} = this.props.auth;
+
+        const adminLinks = (
+            <ul className="navbar-nav me-2 me-lg-0">
+                <span className="navbar-text me-2 align-middle">
+                    <strong>
+                        {user ? `Welcome ${user.username}`: ""}
+                    </strong>
+                </span>
+                <li className="nav-item">
+                    <button onClick={this.props.logout } className="btn nav-link btn-primary btn-sm text-light align-middle">Logout</button>
+                </li>
+            </ul>
+        )
+
         const authLinks = (
             <ul className="navbar-nav me-2 me-lg-0">
                 <span className="navbar-text me-2 align-middle">
@@ -27,6 +41,7 @@ export class Header extends Component{
                 </li>
             </ul>
     )
+
         const guestLinks = (
             <ul className="navbar-nav me-2 me-lg-0">
                 <li className="nav-item">
@@ -43,10 +58,8 @@ export class Header extends Component{
                 <div className="container">
                             <div className="collapse navbar-collapse" id="navbarColor03">
                                 <a className="navbar-brand" href="#">Order System</a>
-
-
                             </div>
-                            {isAuthenticated ? authLinks: guestLinks}
+                            {isAdmin? adminLinks :isAuthenticated ? authLinks: guestLinks}
                 </div>
             </nav>
         )

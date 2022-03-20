@@ -6,16 +6,15 @@ from .serializers import ProductSerializer
 
 class ProductViewSet(viewsets.ModelViewSet):
 
-    permission_classes = [
-        permissions.AllowAny
-    ]
-
-
     serializer_class = ProductSerializer
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            self.permission_classes = [permissions.AllowAny]
+        else:
+            self.permission_classes = [permissions.AllowAny]
+        return super(ProductViewSet, self).get_permissions()        
 
     def get_queryset(self):
         return Product.objects.all()
-
-
-
 

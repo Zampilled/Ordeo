@@ -82,6 +82,7 @@ class UpdateCartAPI(generics.GenericAPIView):
         cart_product, created = CartItem.objects.get_or_create(
             product=product,
             owner=self.request.user,
+            quantity=0,
             ordered=False,
             name=product.name,
             price=product.price,
@@ -104,7 +105,7 @@ class UpdateCartAPI(generics.GenericAPIView):
                                 status=status.HTTP_200_OK
                                 )
             else:
-                cart_product.quantity = quantity
+                cart_product.quantity += quantity
                 cart.products.add(cart_product)
                 return Response({"message": " Item added to your cart", },
                                 status=status.HTTP_200_OK,
@@ -126,6 +127,7 @@ class UpdateCartAPI(generics.GenericAPIView):
         return Response({
             "id": data['id'],
         },status=status.HTTP_200_OK,)
+
 
 # Total api
 

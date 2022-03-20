@@ -7,7 +7,6 @@ class Form extends Component {
     state = {
         name: '',
         price: '',
-        quantity: '',
         description: '',
         image: '',
 
@@ -15,19 +14,19 @@ class Form extends Component {
 
 
     static propTypes = {
-        addProduct: PropTypes.func.isRequired
+        addProduct: PropTypes.func.isRequired,
+        auth: PropTypes.object.isRequired,
     }
 
     onChange = e => this.setState({[e.target.name]: e.target.value});
     onSubmit = e => {
         e.preventDefault();
-        const {name, price, quantity, description, image } = this.state;
-        const product = {name, price, quantity, description, image };
+        const {name, price, description, image } = this.state;
+        const product = {name, price, description, image };
         this.props.addProduct(product);
         this.setState({
             name: "",
             price: "",
-            quantity: "",
             description: "",
             image: "",
 
@@ -39,8 +38,8 @@ class Form extends Component {
 
     render() {
 
-        const { name, price, quantity, description, image  } = this.state;
-        return (
+        const { name, price, description, image  } = this.state;
+        const adminForm =(
             <div className="card card-body mt-4 mb-4">
                 <h2>Add Product</h2>
                 <form onSubmit={this.onSubmit}>
@@ -59,6 +58,7 @@ class Form extends Component {
                         <input
                             className="form-control"
                             type="file"
+                            accept="image/*"
                             name="image"
                             onChange={this.onChange}
                             value={image}
@@ -75,17 +75,6 @@ class Form extends Component {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Quantity</label>
-                        <input
-                            className="form-control"
-                            type="number"
-                            name="quantity"
-                            onChange={this.onChange}
-                            value={quantity}
-                        />
-                    </div>
-
-                    <div className="form-group">
                         <label>Description</label>
                         <textarea
                             className="form-control"
@@ -96,15 +85,27 @@ class Form extends Component {
                         />
                     </div>
 
-                    <div className="form-group ">
+                    <div className="form-group mt-2 ">
                         <button type="submit" className="btn btn-primary">
                             Submit
                         </button>
                     </div>
                 </form>
+
+            </div>
+        )
+        const userForm = (
+            <div></div>
+        )
+        return(
+            <div>
+                {this.props.auth.isAdmin? adminForm: userForm}
             </div>
         );
     }
 }
+const mapStatetoProps = state => ({
+    auth: state.auth
+})
 
-export default connect(null,{addProduct})(Form);
+export default connect(mapStatetoProps,{addProduct})(Form);

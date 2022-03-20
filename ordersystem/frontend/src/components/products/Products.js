@@ -10,13 +10,11 @@ export class Products extends Component {
         getProducts: PropTypes.func.isRequired,
         deleteProduct: PropTypes.func.isRequired,
         addToCart: PropTypes.func.isRequired,
+        auth: PropTypes.object.isRequired,
     };
     state = {
         TheCart: []
-
-
         }
-
     componentDidMount() {
         this.props.getProducts();
 
@@ -51,9 +49,8 @@ export class Products extends Component {
         });
     }
     render() {
-        const {quantity, id} = this.state
-        return (
-            //<form onSubmit={this.onSubmit}>
+        const {quantity} = this.state
+        const adminProducts = (
             <div className="rounded shadow ">
                 <table className="table table-sm table-hover tab align-middle ">
                     <thead>
@@ -62,20 +59,50 @@ export class Products extends Component {
                         <th>Name</th>
                         <th>Price</th>
                         <th>Description</th>
-
                     </tr>
                     </thead>
                     <tbody>
-
                     {this.props.products.map((product) =>  (
-
                         <tr key={product.id}   >
-
                             <td><img src={product.image} alt="" className="rounded"  height="60" width="auto"></img></td>
                             <td>{product.name}</td>
                             <td>${product.price}</td>
                             <td>{product.description}</td>
-                            <td className=" col-sm-1">
+                            <td>
+                                <button
+                                    onClick={this.props.deleteProduct.bind(this, product.id)}
+                                    className="btn btn-danger btn-sm">
+                                    {' '}
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+
+            </div>
+        );
+            const userProducts= (
+                <div className="rounded shadow ">
+                    <table className="table table-sm table-hover tab align-middle ">
+                        <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {this.props.products.map((product) =>  (
+                            <tr key={product.id}   >
+
+                                <td><img src={product.image} alt="" className="rounded"  height="60" width="auto"></img></td>
+                                <td>{product.name}</td>
+                                <td>${product.price}</td>
+                                <td>{product.description}</td>
+                                <td className=" col-sm-1">
 
                                     <input type="number"
                                            className="form-control"
@@ -84,34 +111,33 @@ export class Products extends Component {
                                            onChange={e => this.onChange(product.id,e)}
                                            value={quantity}
                                     />
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                    <form className="mt-2" onSubmit={e => this.onSubmit(e)}>
+                        <div className="text-end mb-2">
+                            <button type="submit" className="btn btn-primary"  >Add To Cart</button>
+                        </div>
+                    </form>
+                </div>
+            )
 
 
-                            </td>
+        return(
+            <div className="container">
 
-                        </tr>
-
-
-                    ))}
-
-                    </tbody>
-
-                </table>
-                <form onSubmit={e => this.onSubmit(e)}>
-                    <div className="text-end m-auto">
-                        <button type="submit" className="btn btn-primary"  >Add To Cart</button>
-                    </div>
-                </form>
-
+                {this.props.auth.isAdmin? adminProducts: userProducts}
             </div>
+        )
 
-            //</form>
-        );
     }
 }
 
 const mapStatetoProps = state => ({
-    products: state.products.products
-
+    products: state.products.products,
+    auth: state.auth
 })
 
 export default connect(mapStatetoProps, { getProducts, deleteProduct, addToCart})(Products);

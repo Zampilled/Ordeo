@@ -1,7 +1,7 @@
 import axios from "axios";
 import {returnErrors} from "./messages";
 
-import {AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_SUCCESS, USER_LOADED, USER_LOADING} from "./types";
+import {AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_SUCCESS, USER_LOADED, USER_LOADING, ADMIN_LOADED, ADMIN_LOGIN_SUCCESS} from "./types";
 
 // LOAD USER AND CHECK TOKEN
 export const loadUser = () => (dispatch, getState) =>{
@@ -10,10 +10,18 @@ export const loadUser = () => (dispatch, getState) =>{
 
     axios.get('/api/auth/user', tokenConfig(getState))
         .then(res =>{
-            dispatch({
-                type: USER_LOADED,
-                payload: res.data
-            })
+            if(res.data.user.is_staff === true){
+                dispatch({
+                    type: ADMIN_LOADED,
+                    payload: res.data
+                })
+            }
+            else {
+                dispatch({
+                    type: USER_LOADED,
+                    payload: res.data
+                })
+            }
         }).catch(err =>{
             dispatch(returnErrors(err.response.data, err.response.status));
             dispatch({
@@ -36,10 +44,19 @@ export const login = (username, password) => dispatch =>{
 
     axios.post('/api/auth/login', body, config)
         .then(res =>{
-            dispatch({
-                type: LOGIN_SUCCESS,
-                payload: res.data
-            })
+            if(res.data.user.is_staff === true){
+
+                dispatch({
+                    type: ADMIN_LOGIN_SUCCESS,
+                    payload: res.data
+                })
+            }
+            else {
+                dispatch({
+                    type: LOGIN_SUCCESS,
+                    payload: res.data
+                })
+            }
         }).catch(err =>{
         dispatch(returnErrors(err.response.data, err.response.status));
         dispatch({

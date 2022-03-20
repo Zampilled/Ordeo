@@ -22,7 +22,6 @@ export class Cart extends Component {
         let TheCart = JSON.parse(JSON.stringify(this.state.TheCart))
         let TheValues = [{id:"",quantity:""}]
         TheValues["id"]= i;
-
         TheValues["quantity"]= e.target.value;
         let index = TheCart.findIndex(obj => obj.id === i)
         if (index === -1){
@@ -31,8 +30,10 @@ export class Cart extends Component {
         else {
             TheCart[index].quantity = e.target.value;
         }
+        this.props.prod.update(i, {quantity: e.target.value })
         this.setState({TheCart})
         console.log(this.state.TheCart)
+        this.props.getCart();
     }
     onSubmit(e) {
         console.log("submit")
@@ -45,10 +46,10 @@ export class Cart extends Component {
 
             this.props.updateCart(id,quantity);
         }
+        this.props.getCart();
         console.log(this.state.TheCart)
         this.setState({
             TheCart: [],
-
         });
 
 
@@ -76,6 +77,7 @@ export class Cart extends Component {
                     {this.props.prod.map(cart => (
 
                         <tr key={cart.id}>
+
                             <td><img src={cart.image} alt="" className="rounded"  height="60" width="auto"></img></td>
                             <td>{cart.name}</td>
                             <td>{cart.description}</td>
@@ -85,8 +87,9 @@ export class Cart extends Component {
                                 className="form-control"
                                 name = "quantity"
                                 type = "number"
-                                placeholder={cart.quantity}
-                                value={quantity}
+
+                                //placeholder={cart.quantity}
+                                value={cart.quantity}
                                 onChange={e => this.onChange(cart.product,e)}
                                 />
                             </td>
@@ -94,7 +97,7 @@ export class Cart extends Component {
 
 
                             <td>
-                                <button onClick={this.props.deleteCartItem.bind(this,cart.id)} className="btn btn-danger btn-sm">{' '}Delete</button>
+                                <button onClick={this.props.deleteCartItem.bind(this,cart.product)} className="btn btn-danger btn-sm">{' '}Delete</button>
                             </td>
                         </tr>
 

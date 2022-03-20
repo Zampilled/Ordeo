@@ -34,7 +34,8 @@ export const deleteProduct = (id) => (dispatch, getState) => {
 // ADD PRODUCT
 
 export const addProduct = (product) => (dispatch, getState) => {
-    axios.post('/api/products/', tokenConfig(getState))
+    console.log(product)
+    axios.post('/api/products/',product, tokenConfig(getState))
         .then(res=>{
             dispatch(createMessage({productCreated: "Product Created"}));
             dispatch({

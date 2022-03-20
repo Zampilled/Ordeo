@@ -8,6 +8,7 @@ import AlertTemplate from "react-alert-template-basic";
 
 import Header from "./layout/Header";
 import Dashboard from "./products/Dashboard";
+
 import Dashy from "./carts/Dashy";
 import Alerts from "./layout/Alerts";
 import Login from "./accounts/Login";
@@ -17,6 +18,7 @@ import PrivateRoute from "./common/PrivateRoute";
 import {Provider} from "react-redux";
 import store from "../store";
 import {loadUser} from "../actions/auth";
+import {Products} from "./products/Products";
 
 
 //Alert Options
