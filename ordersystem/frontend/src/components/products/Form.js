@@ -3,39 +3,43 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {addProduct} from "../../actions/products";
 
+
 class Form extends Component {
     state = {
         name: '',
         price: '',
         description: '',
         image: '',
-
+        file: null
     }
-
-
     static propTypes = {
         addProduct: PropTypes.func.isRequired,
         auth: PropTypes.object.isRequired,
     }
 
     onChange = e => this.setState({[e.target.name]: e.target.value});
+    onImage = e => {
+        let file = e.target.files[0]
+        this.setState({file: file})
+        console.log(file)
+        this.setState({[e.target.name]: e.target.value})
+    }
     onSubmit = e => {
         e.preventDefault();
-        const {name, price, description, image } = this.state;
-        const product = {name, price, description, image };
-        this.props.addProduct(product);
+        let formdata = new FormData()
+        formdata.append('name', this.state.name)
+        formdata.append('price', this.state.price)
+        formdata.append('description', this.state.description)
+        formdata.append('image', this.state.file)
+        this.props.addProduct(formdata);
         this.setState({
             name: "",
             price: "",
             description: "",
             image: "",
-
+            file : null
         });
-
     }
-
-
-
     render() {
 
         const { name, price, description, image  } = this.state;
@@ -54,13 +58,14 @@ class Form extends Component {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Image</label>
+                        <label className="form-label" for="image-control">Image</label>
                         <input
+                            id="image-control"
                             className="form-control"
                             type="file"
                             accept="image/*"
                             name="image"
-                            onChange={this.onChange}
+                            onChange={this.onImage}
                             value={image}
                         />
                     </div>
@@ -107,5 +112,4 @@ class Form extends Component {
 const mapStatetoProps = state => ({
     auth: state.auth
 })
-
 export default connect(mapStatetoProps,{addProduct})(Form);
