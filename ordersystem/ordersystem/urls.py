@@ -6,8 +6,8 @@ urlpatterns = [
     path('', include('frontend.urls')),
     path('', include('products.urls')),
     path('', include('accounts.urls')),
-    path('', include('carts.urls'))
-
+    path('', include('carts.urls')),
+    path('', include('orders.urls')),
     ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -60,6 +60,7 @@ export class Products extends Component {
                         <th>Name</th>
                         <th>Price</th>
                         <th>Description</th>
+                        <tr>Delete</tr>
                     </tr>
                     </thead>
                     <tbody>
@@ -93,6 +94,7 @@ export class Products extends Component {
                             <th>Name</th>
                             <th>Price</th>
                             <th>Description</th>
+                            <th>Quantity</th>
                         </tr>
                         </thead>
                         <tbody>

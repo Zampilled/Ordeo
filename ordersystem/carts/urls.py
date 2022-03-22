@@ -10,6 +10,8 @@ from .api import ViewCartAPI, UpdateCartAPI, CartAPI, CheckoutAPI
 urlpatterns = [
         path('api/cart', CartAPI.as_view(), name='api-cart'),
         path('api/cart/order', UpdateCartAPI.as_view(), name='api-order'),
-        path('api/cart/checkout', CheckoutAPI.as_view(), name='api-checkout')
+        path('api/cart/checkout', CheckoutAPI.as_view(), name='api-checkout'),
+        path('api/cart/test', ViewCartAPI.as_view(), name='cart-test'),
+
 
 ]

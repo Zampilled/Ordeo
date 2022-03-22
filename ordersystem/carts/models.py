@@ -19,8 +19,6 @@ class CartItem(models.Model):
     image = models.ImageField(blank=True, upload_to='images/' )
     price = models.FloatField()
     description = models.CharField(max_length=50, blank=True)
-    #subtotal = models.FloatField(default=0)
-
 
     def __str__(self):
         return f"{self.quantity} of {self.product.name}"
@@ -29,28 +27,23 @@ class CartItem(models.Model):
     def subtotal(self):
         return self.quantity*self.price
 
-
-
 class Cart(models.Model):
-    PaymentChoices = (
-        ('C', 'Cash'),
-        ('O', 'Online Payment Provider'),
-        ('V', 'Visa')
-    )
-    DeliveryChoices = (
-        ('P', 'Pick-up'),
-        ('N', 'Normal Delivery' ),
-        ('F', 'Fast Delivery')
-    )
 
+    PaymentChoices = [
+        ('Cash', 'Cash'),
+        ('Online Payment', 'Online Payment Provider'),
+        ('Visa', 'Visa')
+    ]
+    DeliveryChoices = (
+        ('Pick-up', 'Pick-up'),
+        ('Normal Delivery', 'Normal Delivery' ),
+        ('Fast Delivery', 'Fast Delivery')
+    )
     owner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE,)
-    payment = models.CharField(max_length=1, choices=PaymentChoices, blank=True)
-    delivery = models.CharField(max_length=1, choices=DeliveryChoices, blank=True)
+    payment = models.CharField(max_length=50, choices=PaymentChoices, blank=True)
+    delivery = models.CharField(max_length=50, choices=DeliveryChoices, blank=True)
     ordered = models.BooleanField(default=False)
     products = models.ManyToManyField(CartItem, related_name="CartItem",blank=True, null=True)
-
-    def __str__(self):
-        return self.user.username
 
     @property
     def total(self):

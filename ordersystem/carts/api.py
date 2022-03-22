@@ -5,7 +5,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 
 from .models import CartItem, Cart
-from .serializers import CartSerializer, CartItemSerializer, AddProductSerializer, CheckoutSerializer
+from .serializers import CartSerializer, CartItemSerializer, AddProductSerializer, CheckoutSerializer, SendSerializer
 
 
 class CartAPI(ListAPIView):
@@ -15,7 +15,7 @@ class CartAPI(ListAPIView):
     serializer_class = CartSerializer
 
     def get_queryset(self):
-        return Cart.objects.filter(owner=self.request.user, ordered=False)
+        return Cart.objects.filter(owner=self.request.user)
 
 
 
@@ -23,10 +23,10 @@ class ViewCartAPI(generics.ListAPIView):
     permission_classes = [
         permissions.IsAuthenticated
     ]
-    serializer_class = CartItemSerializer
+    serializer_class = Cart
 
     def get_queryset(self):
-        cartitemqs = CartItem.objects.filter(owner=self.request.user, ordered=False)
+        cartitemqs = CartItem.objects.all()
         return cartitemqs
 
 
@@ -45,7 +45,7 @@ class UpdateCartAPI(generics.GenericAPIView):
         product = get_object_or_404(Product, pk=data['id'])
         quantity = data['quantity']
 
-        cart_qs = Cart.objects.filter(owner=self.request.user, ordered=False)
+        cart_qs = Cart.objects.filter(owner=self.request.user)
         if cart_qs.exists():
             cart = cart_qs[0]
             if cart.products.filter(product__pk=product.pk).exists():
@@ -68,7 +68,7 @@ class UpdateCartAPI(generics.GenericAPIView):
         data = serializer.validated_data
         product = get_object_or_404(Product, pk=data['id'])
         quantity = data['quantity']
-        cart_qs = Cart.objects.filter(owner=self.request.user, ordered=False)
+        cart_qs = Cart.objects.filter(owner=self.request.user)
         if cart_qs.exists():
             cart = cart_qs[0]
             if cart.products.filter(product__pk=product.pk).exists():
@@ -85,7 +85,6 @@ class UpdateCartAPI(generics.GenericAPIView):
                     product=product,
                     owner=self.request.user,
                     quantity=quantity,
-                    ordered=False,
                     name=product.name,
                     price=product.price,
                     image=product.image,
@@ -101,7 +100,6 @@ class UpdateCartAPI(generics.GenericAPIView):
                 product=product,
                 owner=self.request.user,
                 quantity=quantity,
-                ordered=False,
                 name=product.name,
                 price=product.price,
                 image=product.image,
@@ -133,27 +131,16 @@ class CheckoutAPI(generics.GenericAPIView):
         serializer = CheckoutSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        cart_qs = Cart.objects.filter(owner=self.request.user, ordered=False)
-        cartitem_qs = CartItem.objects.filter(owner=self.request.user, ordered=False)
+        cart_qs = Cart.objects.filter(owner=self.request.user)
+        cartitem_qs = CartItem.objects.filter(owner=self.request.user)
         if cartitem_qs.exists():
             if cart_qs.exists():
                 cart = cart_qs[0]
                 cart.payment = data['payment']
                 cart.delivery = data['delivery']
-                cart.ordered = True
-                cart.save()
-                #i=0
-                #for i in cartitem_qs.iterator():
-                   # cartitem = cartitem_qs[i]
-                    #cartitem.ordered = True
-                cartitem_qs.update(ordered=True)
-                    #cartitem.save()
-                    #i+=1
-
                 Cart.objects.create(owner=self.request.user)
                 return Response({'status': 'Checkout Complete'},
                                 status=status.HTTP_200_OK)
-
             else:
                 Cart.objects.create(owner=self.request.user)
                 return Response({'status': 'Cart Doesnt Exist. Creating One.'},

@@ -10,6 +10,7 @@ import Header from "./layout/Header";
 import Dashboard from "./products/Dashboard";
 
 import Dashy from "./carts/Dashy";
+import Checkout from "./checkout/Checkout";
 import Alerts from "./layout/Alerts";
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
@@ -38,7 +39,7 @@ class App extends Component{
 
     render() {
         return(
-            <Provider store={store }>
+            <Provider store={store}>
                 <AlertProvider template={AlertTemplate}{...alertOptions}>
                     <Router>
                         <Fragment>
@@ -47,6 +48,7 @@ class App extends Component{
                             <div className="container">
                                 <Switch>
                                     <PrivateRoute exact path="/" component={Dashboard} />
+                                    <PrivateRoute exact path="/cart/checkout" component={Checkout} />
                                     <PrivateRoute exact path="/cart" component={Dashy} />
                                     <Route exact path="/register" component= {Register} />
                                     <Route exact path="/login" component= {Login} />

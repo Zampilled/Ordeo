@@ -1,4 +1,4 @@
-import {DELETE_CART_ITEM, GET_CART, UPDATE_CART, ADD_TO_CART} from '../actions/types.js';
+import {DELETE_CART_ITEM, GET_CART, UPDATE_CART, ADD_TO_CART, CHECKOUT} from '../actions/types.js';
 
 const initialState = {
     carts : [],
@@ -14,6 +14,12 @@ export default function (state = initialState, action){
                 prod : action.payload[0].products,
 
             };
+        case CHECKOUT:
+            return {
+                ...state,
+                carts: null,
+                prod: null
+            }
         case ADD_TO_CART:
             return{
                 ...state,

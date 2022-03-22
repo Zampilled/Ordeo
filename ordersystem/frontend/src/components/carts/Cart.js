@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
+
 import PropTypes from "prop-types";
 import {deleteCartItem, getCart, updateCart} from "../../actions/carts";
+import {Link, Redirect} from "react-router-dom";
 
 export class Cart extends Component {
     static propTypes = {
@@ -43,16 +45,16 @@ export class Cart extends Component {
             quantity = TheCart[i].quantity;
             this.props.updateCart(id,quantity);
         }
-
+        this.componentDidMount()
         this.setState({
             TheCart: [],
 
         });
-
+        this.componentDidMount()
     }
 
     render() {
-        this.props.getCart()
+
         const {quantity} = this.state
 
         return (
@@ -100,15 +102,20 @@ export class Cart extends Component {
                     </tbody>
 
                 </table>
-                <div className="text-end mb-2">
-                    <label className="label label-danger m-auto fa-bold">Total: ${Math.round(this.props.carts.total * 100) / 100}</label>
+                <div className="text-end align-middle m-auto">
+                    <label className="label label-danger m-auto fa-bold ">Total: ${Math.round(this.props.carts.total * 100) / 100}</label>
                     <form onSubmit={e => this.onSubmit(e)}>
-                        <div className="text-end m-auto">
+                        <div className="m-auto">
                             <button type="submit" className="btn btn-primary" >Quantity</button>
                         </div>
                     </form>
+
+                        <div className="">
+                            <Link to="/cart/checkout" className="btn btn-success " >Checkout</Link>
+                        </div>
                 </div>
             </div>
+
 
         );
     }

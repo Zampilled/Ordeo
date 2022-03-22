@@ -8,6 +8,8 @@ class AddProductSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     quantity = serializers.IntegerField(default=1)
 
+class SendSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
 
 class CartItemSerializer(serializers.ModelSerializer):
     subtotal = serializers.FloatField()
@@ -28,5 +30,5 @@ class CartSerializer(serializers.ModelSerializer):
 
 
 class CheckoutSerializer(serializers.Serializer):
-    payment = serializers.CharField(max_length=1, allow_blank=False)
-    delivery = serializers.CharField(max_length=1, allow_blank=False)
+    payment = serializers.CharField(max_length=50, allow_blank=False)
+    delivery = serializers.CharField(max_length=50, allow_blank=False)
