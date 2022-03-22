@@ -5,15 +5,14 @@ import {deleteCartItem, getCart, updateCart} from "../../actions/carts";
 
 export class Cart extends Component {
     static propTypes = {
-        carts : PropTypes.array.isRequired,
         prod : PropTypes.array.isRequired,
+        carts : PropTypes.array.isRequired,
         deleteCartItem: PropTypes.func.isRequired,
         getCart: PropTypes.func.isRequired,
         updateCart: PropTypes.func.isRequired,
     };
     componentDidMount() {
         this.props.getCart();
-
     }
     state = {
         TheCart: []
@@ -30,10 +29,9 @@ export class Cart extends Component {
         else {
             TheCart[index].quantity = e.target.value;
         }
-        this.props.prod.update(i, {quantity: e.target.value })
         this.setState({TheCart})
         console.log(this.state.TheCart)
-        this.props.getCart();
+
     }
     onSubmit(e) {
         console.log("submit")
@@ -43,22 +41,20 @@ export class Cart extends Component {
             let id, quantity  = 0;
             id = TheCart[i].id;
             quantity = TheCart[i].quantity;
-
             this.props.updateCart(id,quantity);
         }
-        this.props.getCart();
-        console.log(this.state.TheCart)
+
         this.setState({
             TheCart: [],
-        });
 
+        });
 
     }
 
-
-
     render() {
+        this.props.getCart()
         const {quantity} = this.state
+
         return (
 
             <div className="rounded shadow ">
@@ -77,7 +73,6 @@ export class Cart extends Component {
                     {this.props.prod.map(cart => (
 
                         <tr key={cart.id}>
-
                             <td><img src={cart.image} alt="" className="rounded"  height="60" width="auto"></img></td>
                             <td>{cart.name}</td>
                             <td>{cart.description}</td>
@@ -87,13 +82,12 @@ export class Cart extends Component {
                                 className="form-control"
                                 name = "quantity"
                                 type = "number"
-
-                                //placeholder={cart.quantity}
-                                value={cart.quantity}
+                                placeholder={cart.quantity}
+                                value={quantity}
                                 onChange={e => this.onChange(cart.product,e)}
                                 />
                             </td>
-                            <td>${Math.round(cart.subtotal) }</td>
+                            <td>${Math.round(cart.subtotal * 100) / 100}</td>
 
 
                             <td>
@@ -107,7 +101,7 @@ export class Cart extends Component {
 
                 </table>
                 <div className="text-end mb-2">
-                    <label className="label label-danger m-auto fa-bold">Total: ${Math.round(this.props.carts.total)}</label>
+                    <label className="label label-danger m-auto fa-bold">Total: ${Math.round(this.props.carts.total * 100) / 100}</label>
                     <form onSubmit={e => this.onSubmit(e)}>
                         <div className="text-end m-auto">
                             <button type="submit" className="btn btn-primary" >Quantity</button>
@@ -123,7 +117,7 @@ export class Cart extends Component {
 const mapStatetoProps = state => ({
     carts: state.carts.carts,
     prod : state.carts.prod
-
 })
+
 
 export default connect(mapStatetoProps, { getCart, deleteCartItem, updateCart})(Cart);

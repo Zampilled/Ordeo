@@ -23,7 +23,7 @@ export const getCart = () =>(dispatch, getState) =>{
 
 export const addToCart = (id, quantity) =>(dispatch, getState) =>{
     const body = JSON.stringify({id,quantity});
-    axios.post('/api/orderitem',body, tokenConfig(getState))
+    axios.post('/api/cart/order',body, tokenConfig(getState))
 
         .then(res=>{
             dispatch(createMessage({productCreated: "Products Added"}));
@@ -42,7 +42,7 @@ export const addToCart = (id, quantity) =>(dispatch, getState) =>{
 
 export const updateCart = (id, quantity) =>(dispatch, getState) =>{
     const body = JSON.stringify({id,quantity});
-    axios.patch('/api/orderitem',body, tokenConfig(getState))
+    axios.patch('/api/cart/order',body, tokenConfig(getState))
 
         .then(res=>{
             //this.setState(getCart())
@@ -61,7 +61,7 @@ export const updateCart = (id, quantity) =>(dispatch, getState) =>{
 //Delete Cart Item
 
 export const deleteCartItem = (id) =>(dispatch, getState) =>{
-    axios.put('/api/orderitem',{id},tokenConfig(getState) )
+    axios.put('/api/cart/order',{id},tokenConfig(getState) )
         .then(res=>{
             console.log({id})
             dispatch(createMessage({productCreated: "Products Deleted"}));

@@ -43,6 +43,7 @@ export class Products extends Component {
             id = TheCart[i].id;
             quantity = TheCart[i].quantity;
             this.props.addToCart(id,quantity);
+            console.log()
         }
         this.setState({
             TheCart: []

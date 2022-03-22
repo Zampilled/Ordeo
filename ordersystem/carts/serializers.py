@@ -25,3 +25,8 @@ class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
         fields = '__all__'
+
+
+class CheckoutSerializer(serializers.Serializer):
+    payment = serializers.CharField(max_length=1, allow_blank=False)
+    delivery = serializers.CharField(max_length=1, allow_blank=False)

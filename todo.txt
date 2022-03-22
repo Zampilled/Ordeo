@@ -2,12 +2,12 @@
 
 
 y - sort out git
-n - quantity changer
-n - checkout api
+y - quantity changer
+y - checkout api
 n - checkout frontend
 y - admin backend
 y - register backend
-n - register frontend
+y - register frontend
 n - account screen
 y - admin product adder
 n - order management backend

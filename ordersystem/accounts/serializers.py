@@ -10,21 +10,19 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'email', 'is_staff')
 
 
-
 # Register Serializer
 class RegisterSerializers(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password', 'is_staff')
+        fields = ('id', 'username', 'email', 'password')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        if validated_data['is_staff'] == True:
-            user = User.objects.create_superuser(validated_data['username'], validated_data['email'], validated_data['password'])
-        else:
-            user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
+        user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
         return user
+
 # Login Serializer
+
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()

@@ -5,7 +5,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 
 from .models import CartItem, Cart
-from .serializers import CartSerializer, CartItemSerializer, AddProductSerializer
+from .serializers import CartSerializer, CartItemSerializer, AddProductSerializer, CheckoutSerializer
 
 
 class CartAPI(ListAPIView):
@@ -15,7 +15,7 @@ class CartAPI(ListAPIView):
     serializer_class = CartSerializer
 
     def get_queryset(self):
-        return Cart.objects.filter(owner=self.request.user)
+        return Cart.objects.filter(owner=self.request.user, ordered=False)
 
 
 
@@ -44,23 +44,14 @@ class UpdateCartAPI(generics.GenericAPIView):
         data = serializer.validated_data
         product = get_object_or_404(Product, pk=data['id'])
         quantity = data['quantity']
-        cart_product, created = CartItem.objects.get_or_create(
-            product=product,
-            owner=self.request.user,
-            ordered=False,
-            name=product.name,
-            price=product.price,
-            image=product.image,
-            description=product.description,
 
-
-        )
         cart_qs = Cart.objects.filter(owner=self.request.user, ordered=False)
         if cart_qs.exists():
             cart = cart_qs[0]
             if cart.products.filter(product__pk=product.pk).exists():
-                cart_product.quantity = quantity
-                cart_product.save()
+                item = cart.products.get(product = product.pk)
+                item.quantity = quantity
+                item.save()
                 return Response({"message": "Quantity Updated"
                                  },
                                 status=status.HTTP_200_OK
@@ -71,50 +62,51 @@ class UpdateCartAPI(generics.GenericAPIView):
                                 status=status.HTTP_400_BAD_REQUEST
                                 )
 
-
-
     def post(self, request):
         serializer = AddProductSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
         product = get_object_or_404(Product, pk=data['id'])
         quantity = data['quantity']
-        cart_product, created = CartItem.objects.get_or_create(
-            product=product,
-            owner=self.request.user,
-            quantity=0,
-            ordered=False,
-            name=product.name,
-            price=product.price,
-            image=product.image,
-            description=product.description,
-
-
-        )
         cart_qs = Cart.objects.filter(owner=self.request.user, ordered=False)
-
         if cart_qs.exists():
             cart = cart_qs[0]
-
             if cart.products.filter(product__pk=product.pk).exists():
-                cart_product.quantity += quantity
+                item = cart.products.get(product = product.pk)
+                item.quantity += quantity
+                item.save()
 
-                cart_product.save()
-                return Response({"message": "Quantity updated",
+                return Response({"message": "Quantity Added",
                                  },
                                 status=status.HTTP_200_OK
                                 )
             else:
-                cart_product.quantity += quantity
-                cart.products.add(cart_product)
+                cart.products.create(
+                    product=product,
+                    owner=self.request.user,
+                    quantity=quantity,
+                    ordered=False,
+                    name=product.name,
+                    price=product.price,
+                    image=product.image,
+                    description=product.description,
+                )
                 return Response({"message": " Item added to your cart", },
                                 status=status.HTTP_200_OK,
                                 )
         else:
 
             cart = Cart.objects.create(owner=self.request.user)
-            cart_product.quantity = quantity
-            cart.products.add(cart_product)
+            cart.products.create(
+                product=product,
+                owner=self.request.user,
+                quantity=quantity,
+                ordered=False,
+                name=product.name,
+                price=product.price,
+                image=product.image,
+                description=product.description,
+            )
             return Response({"message": "Order is created & Item added to your cart", },
                             status=status.HTTP_200_OK,)
 
@@ -129,5 +121,42 @@ class UpdateCartAPI(generics.GenericAPIView):
         },status=status.HTTP_200_OK,)
 
 
-# Total api
+#Checkout Api
 
+class CheckoutAPI(generics.GenericAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+    serializer_class = CartItemSerializer
+
+    def post(self, request):
+        serializer = CheckoutSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        cart_qs = Cart.objects.filter(owner=self.request.user, ordered=False)
+        cartitem_qs = CartItem.objects.filter(owner=self.request.user, ordered=False)
+        if cartitem_qs.exists():
+            if cart_qs.exists():
+                cart = cart_qs[0]
+                cart.payment = data['payment']
+                cart.delivery = data['delivery']
+                cart.ordered = True
+                cart.save()
+                #i=0
+                #for i in cartitem_qs.iterator():
+                   # cartitem = cartitem_qs[i]
+                    #cartitem.ordered = True
+                cartitem_qs.update(ordered=True)
+                    #cartitem.save()
+                    #i+=1
+
+                Cart.objects.create(owner=self.request.user)
+                return Response({'status': 'Checkout Complete'},
+                                status=status.HTTP_200_OK)
+
+            else:
+                Cart.objects.create(owner=self.request.user)
+                return Response({'status': 'Cart Doesnt Exist. Creating One.'},
+                                status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'status': 'Cart Is Empty'}, status=status.HTTP_400_BAD_REQUEST)

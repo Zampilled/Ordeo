@@ -32,8 +32,20 @@ class CartItem(models.Model):
 
 
 class Cart(models.Model):
-    owner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE,)
+    PaymentChoices = (
+        ('C', 'Cash'),
+        ('O', 'Online Payment Provider'),
+        ('V', 'Visa')
+    )
+    DeliveryChoices = (
+        ('P', 'Pick-up'),
+        ('N', 'Normal Delivery' ),
+        ('F', 'Fast Delivery')
+    )
 
+    owner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE,)
+    payment = models.CharField(max_length=1, choices=PaymentChoices, blank=True)
+    delivery = models.CharField(max_length=1, choices=DeliveryChoices, blank=True)
     ordered = models.BooleanField(default=False)
     products = models.ManyToManyField(CartItem, related_name="CartItem",blank=True, null=True)
 
