@@ -1,7 +1,8 @@
 from rest_framework import serializers
 
-from .models import Cart
-from .models import CartItem
+from .models import Cart,CartItem, OrderItem,Order
+
+
 
 
 class AddProductSerializer(serializers.Serializer):
@@ -28,6 +29,18 @@ class CartSerializer(serializers.ModelSerializer):
         model = Cart
         fields = '__all__'
 
+
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItem
+        fields = '__all__'
+
+class OrderSerializer(serializers.ModelSerializer):
+    products = OrderItemSerializer(read_only=True, many=True)
+    class Meta:
+        model = Order
+        fields = '__all__'
 
 class CheckoutSerializer(serializers.Serializer):
     payment = serializers.CharField(max_length=50, allow_blank=False)

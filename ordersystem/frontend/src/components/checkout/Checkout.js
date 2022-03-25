@@ -30,10 +30,12 @@ export class Checkout extends Component {
 
         console.log(payment, delivery)
         this.props.checkout(payment, delivery);
+
         this.setState({
             payment: '',
             quantity: ''
         });
+
     };
 
     render() {
