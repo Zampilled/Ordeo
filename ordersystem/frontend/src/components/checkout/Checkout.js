@@ -7,7 +7,7 @@ import {Link, Redirect} from "react-router-dom";
 export class Checkout extends Component {
 
     static propTypes = {
-        carts: PropTypes.array.isRequired,
+        //carts: PropTypes.array.isRequired,
         checkout: PropTypes.func.isRequired,
         getCart: PropTypes.func.isRequired,
     }
@@ -30,7 +30,6 @@ export class Checkout extends Component {
 
         console.log(payment, delivery)
         this.props.checkout(payment, delivery);
-
         this.setState({
             payment: '',
             quantity: ''
@@ -39,40 +38,45 @@ export class Checkout extends Component {
     };
 
     render() {
+        if(this.props.carts == null){
+            return <Redirect to="/"/>
+        }
+        else {
+            return (
 
-        return (
-            <div className="col-md-6 m-auto shadow">
-                <div className="card card-body m-3">
-                    <h2 className="text-center">Checkout</h2>
-                    <h3 className=" m-auto fw-bold ">Total: ${Math.round(this.props.carts.total * 100) / 100}</h3>
-                    <form className="text-center" onSubmit={this.onSubmit}>
-                        <div className="form-group">
-                            <label className="form-label pr-2">Payment Method</label>
-                            <select className="select-list" onChange={e => this.onChange(e)} name="payment">
-                                <option selected>....</option>
-                                <option value="Cash">Cash</option>
-                                <option value="Online Payment">Online Payment</option>
-                                <option value="Visa">Visa</option>
-                            </select>
-                        </div>
-                        <div className="form-group">
-                            <label className="form-label">Delivery Method</label>
-                            <select onChange={e => this.onChange(e)} name="delivery" className="select-list">
-                                <option selected>....</option>
-                                <option value="Pick-up">Pick-up</option>
-                                <option value="Normal Delivery">Normal Delivery</option>
-                                <option value="Fast Delivery">Fast Delivery</option>
-                            </select>
-                        </div>
-                        <div className="form-group">
-                            <Link to="/cart" className="btn btn-danger">Back</Link>
-                            <button type="submit" className="btn btn-success">Checkout</button>
-                        </div>
-                    </form>
+                <div className="col-md-6 m-auto shadow">
+                    <div className="card card-body m-3">
+                        <h2 className="text-center">Checkout</h2>
+                        <h3 className=" m-auto fw-bold ">Total: ${Math.round(this.props.carts.total * 100) / 100}</h3>
+                        <form className="text-center" onSubmit={this.onSubmit}>
+                            <div className="form-group">
+                                <label className="form-label pr-2">Payment Method</label>
+                                <select className="select-list" onChange={e => this.onChange(e)} name="payment">
+                                    <option selected>....</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Online Payment">Online Payment</option>
+                                    <option value="Visa">Visa</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Delivery Method</label>
+                                <select onChange={e => this.onChange(e)} name="delivery" className="select-list">
+                                    <option selected>....</option>
+                                    <option value="Pick-up">Pick-up</option>
+                                    <option value="Normal Delivery">Normal Delivery</option>
+                                    <option value="Fast Delivery">Fast Delivery</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <Link to="/cart" className="btn btn-danger">Back</Link>
+                                <button type="submit" className="btn btn-success">Checkout</button>
+                            </div>
+                        </form>
 
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }
 

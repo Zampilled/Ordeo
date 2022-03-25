@@ -73,11 +73,13 @@ class OrderRecievedAPI(generics.GenericAPIView):
                 order.save()
                 return Response({
                     'status': 'Order Received'
-                },status=status.HTTP_200_OK)
+                },
+                    status=status.HTTP_200_OK)
             else:
                 return Response({
                     'status': 'Order Already Received or Not Sent'
-                },status=status.HTTP_400_BAD_REQUEST)
+                },
+                    status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({
                 'status': 'Order Doesnt Exist'
