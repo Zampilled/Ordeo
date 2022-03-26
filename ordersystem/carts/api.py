@@ -23,7 +23,7 @@ class OrderAPI(ListAPIView):
     ]
     serializer_class = OrderSerializer
     def get_queryset(self):
-        return Order.objects.filter(owner=self.request.user, received =False)
+        return Order.objects.filter(owner=self.request.user, received=False)
 
 
 class SendOrderAPI(generics.GenericAPIView):
