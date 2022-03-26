@@ -26,7 +26,6 @@ class CartItem(models.Model):
 
 class Cart(models.Model):
     owner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
-    ordered = models.BooleanField(default=False)
     products = models.ManyToManyField(CartItem, related_name="CartItem",blank=True, null=True)
 
     @property
@@ -37,6 +36,7 @@ class Cart(models.Model):
 class OrderItem(models.Model):
     name = models.CharField(max_length=100)
     quantity = models.IntegerField()
+
 
 class Order(models.Model):
     PaymentChoices = [

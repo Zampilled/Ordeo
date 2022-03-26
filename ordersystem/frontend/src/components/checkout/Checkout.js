@@ -44,10 +44,10 @@ export class Checkout extends Component {
         else {
             return (
 
-                <div className="col-md-6 m-auto shadow">
-                    <div className="card card-body m-3">
+                <div className="col-md-6 card m-auto shadow car">
+                    <div className=" card-body m-3 text-center">
                         <h2 className="text-center">Checkout</h2>
-                        <h3 className=" m-auto fw-bold ">Total: ${Math.round(this.props.carts.total * 100) / 100}</h3>
+                        <h3 className=" m-auto fw-bold text-centre">Total: ${Math.round(this.props.carts.map(total =>(total.total)) * 100) / 100}</h3>
                         <form className="text-center" onSubmit={this.onSubmit}>
                             <div className="form-group">
                                 <label className="form-label pr-2">Payment Method</label>

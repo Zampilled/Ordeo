@@ -7,7 +7,6 @@ import {Link, Redirect} from "react-router-dom";
 
 export class Cart extends Component {
     static propTypes = {
-        prod : PropTypes.array.isRequired,
         carts : PropTypes.array.isRequired,
         deleteCartItem: PropTypes.func.isRequired,
         getCart: PropTypes.func.isRequired,
@@ -38,7 +37,7 @@ export class Cart extends Component {
     onSubmit(e) {
         console.log("submit")
         let TheCart = JSON.parse(JSON.stringify(this.state.TheCart))
-
+        console.log(this.state.TheCart)
         for(let i = 0; i<TheCart.length;i++ ){
             let id, quantity  = 0;
             id = TheCart[i].id;
@@ -71,39 +70,39 @@ export class Cart extends Component {
                         <th>Sub-Total</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    {this.props.prod.map(cart => (
 
-                        <tr key={cart.id}>
-                            <td><img src={cart.image} alt="" className="rounded"  height="60" width="auto"></img></td>
-                            <td>{cart.name}</td>
-                            <td>{cart.description}</td>
-                            <td>${cart.price}</td>
-                            <td className="col-sm-1">
-                                <input
-                                className="form-control"
-                                name = "quantity"
-                                type = "number"
-                                placeholder={cart.quantity}
-                                value={quantity}
-                                onChange={e => this.onChange(cart.product,e)}
-                                />
-                            </td>
-                            <td>${Math.round(cart.subtotal * 100) / 100}</td>
+                    {this.props.carts.map(cart => (
+                        <tbody key={cart.id}>{cart.products.map(cart =>(
+                            <tr key={cart.id}>
+                                <td><img src={cart.image} alt="" className="rounded"  height="60" width="auto"></img></td>
+                                <td>{cart.name}</td>
+                                <td>{cart.description}</td>
+                                <td>${cart.price}</td>
+                                <td className="col-sm-1">
+                                    <input
+                                    className="form-control"
+                                    name = "quantity"
+                                    type = "number"
+                                    placeholder={cart.quantity}
+                                    value={quantity}
+                                    onChange={e => this.onChange(cart.product,e)}
+                                    />
+                                </td>
+                                <td>${Math.round(cart.subtotal * 100) / 100}</td>
 
 
-                            <td>
-                                <button onClick={this.props.deleteCartItem.bind(this,cart.product)} className="btn btn-danger btn-sm">{' '}Delete</button>
-                            </td>
-                        </tr>
-
+                                <td>
+                                    <button onClick={this.props.deleteCartItem.bind(this,cart.product)} className="btn btn-danger btn-sm">{' '}Delete</button>
+                                </td>
+                            </tr>
+                        ))} </tbody>
                     ))}
 
-                    </tbody>
+
 
                 </table>
                 <div className="text-end align-middle m-auto">
-                    <label className="label label-danger m-auto fa-bold ">Total: ${Math.round(this.props.carts.total * 100) / 100}</label>
+                    <label className="label label-danger m-auto fa-bold ">Total: ${Math.round(this.props.carts.map(total =>(total.total)) * 100) / 100}</label>
                     <form onSubmit={e => this.onSubmit(e)}>
                         <div className="m-auto">
                             <button type="submit" className="btn btn-primary" >Quantity</button>
@@ -123,7 +122,7 @@ export class Cart extends Component {
 
 const mapStatetoProps = state => ({
     carts: state.carts.carts,
-    prod : state.carts.prod
+
 })
 
 

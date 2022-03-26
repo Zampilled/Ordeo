@@ -12,7 +12,6 @@ export const getProducts = () => (dispatch, getState) => {
             dispatch({
                 type: GET_PRODUCTS,
                 payload: res.data
-
             });
         }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
 }

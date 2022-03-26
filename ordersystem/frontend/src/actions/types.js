@@ -19,3 +19,6 @@ export const ADMIN_LOGIN_SUCCESS = "ADMIN_LOGIN_SUCCESS";
 export const ADMIN_LOADED = "ADMIN_LOADED";
 export const CHECKOUT = "CHECKOUT";
 export const GET_ORDERS = "GET_ORDERS";
+export const ORDER_RECEIVED = "ORDER_RECEIVED";
+export const GET_ADMIN_ORDERS = "GET_ADMIN_ORDERS";
+export const ORDER_SEND = "ORDER_SEND";

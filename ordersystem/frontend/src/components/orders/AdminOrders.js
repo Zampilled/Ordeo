@@ -1,19 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {getOrders , orderReceived} from "../../actions/orders";
+import {getAdminOrders, orderSend} from "../../actions/orders";
 import {Link, Redirect} from "react-router-dom";
 import {Cart} from "../carts/Cart";
 
 export class Orders extends Component {
     static propTypes = {
         orders : PropTypes.array.isRequired,
-        getOrders : PropTypes.func.isRequired,
-        orderReceived: PropTypes.func.isRequired,
+        getAdminOrders : PropTypes.func.isRequired,
+        orderSend: PropTypes.func.isRequired,
     };
     componentDidMount() {
-        this.props.getOrders()
+        this.props.getAdminOrders()
     }
+
 
     render() {
         return (
@@ -38,7 +39,7 @@ export class Orders extends Component {
                                 <div className="collapse" id="s">
                                     {orders.products.map(prod=>(
 
-                                                <li>{prod.name} : {prod.quantity}</li>
+                                        <li>{prod.name} : {prod.quantity}</li>
 
 
 
@@ -50,18 +51,18 @@ export class Orders extends Component {
                             </td>
                             <td className="fw-bold">${orders.total}</td>
 
-                                <td>{orders.sent? orders.received? 'Order Received':<button
-                                    onClick={this.props.orderReceived.bind(this, orders.id)}
-                                    className="btn btn-danger btn-sm">
-                                    {' '}
-                                    Order Received?
-                                </button>:'Order Not Sent Yet' }</td>
+                            <td>{orders.received? 'Order Received':orders.sent? 'Order Sent':<button
+                                onClick={this.props.orderSend.bind(this, orders.id)}
+                                className="btn btn-danger btn-sm">
+                                {' '}
+                                Send Order
+                            </button>}</td>
 
                         </tr>
                     ))}
                     </tbody>
                 </table>
-                
+
             </div>
         );
     }
@@ -70,4 +71,4 @@ const mapStatetoProps = state => ({
     orders: state.orders.orders
 })
 
-export default connect(mapStatetoProps, { getOrders , orderReceived})(Orders);
+export default connect(mapStatetoProps, {getAdminOrders, orderSend})(Orders);

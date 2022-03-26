@@ -2,6 +2,7 @@ import {ADD_PRODUCT, DELETE_PRODUCT, GET_PRODUCTS} from '../actions/types.js';
 
 const initialState = {
     products : []
+
 }
 
 export default function (state = initialState, action ){

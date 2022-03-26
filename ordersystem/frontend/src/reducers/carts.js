@@ -2,7 +2,7 @@ import {DELETE_CART_ITEM, GET_CART, UPDATE_CART, ADD_TO_CART, CHECKOUT} from '..
 
 const initialState = {
     carts : [],
-    prod : []
+
 }
 
 export default function (state = initialState, action){
@@ -10,15 +10,13 @@ export default function (state = initialState, action){
         case GET_CART:
             return {
                 ...state,
-                carts: action.payload[0],
-                prod : action.payload[0].products,
+                carts: action.payload,
 
             };
         case CHECKOUT:
             return {
                 ...state,
-                carts: null,
-                prod: null
+                carts: null
             }
         case ADD_TO_CART:
             return{
@@ -28,14 +26,14 @@ export default function (state = initialState, action){
         case UPDATE_CART:
             return{
                 ...state,
-                carts:[...state.carts, action.payload],
+                carts:[...state.carts],
 
 
             };
         case DELETE_CART_ITEM:
             return {
                 ...state,
-                prod: state.prod.filter(cart => cart.product !== action.payload.id)
+                carts: state.carts[0].products.filter(cart => cart.product !== action.payload.id)
             }
         default:
             return state;

@@ -42,7 +42,7 @@ export const updateCart = (id, quantity) =>(dispatch, getState) =>{
         .then(res=>{
             dispatch(createMessage({productCreated: "Quantities Changed"}));
             dispatch({
-                type: UPDATE_CART,
+                type: UPDATE_CART
 
 
             });

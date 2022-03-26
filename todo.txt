@@ -9,6 +9,6 @@ y - admin backend
 y - register backend
 y - register frontend
 y - admin product adder
-n - order management backend
-n - order screen
+y - order management backend
+y - order screen
 n - pretty clean up

@@ -68,7 +68,7 @@ class OrderRecievedAPI(generics.GenericAPIView):
         orderqs = Order.objects.filter(id=id, owner=request.user)
         if orderqs.exists():
             order = orderqs[0]
-            if order.received == False & order.sent == True:
+            if order.received == False:
                 order.received = True
                 order.save()
                 return Response({
