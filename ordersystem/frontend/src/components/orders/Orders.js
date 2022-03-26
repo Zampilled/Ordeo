@@ -14,8 +14,14 @@ export class Orders extends Component {
     componentDidMount() {
         this.props.getOrders()
     }
+    onClick(e){
+        this.props.orderReceived(e)
+        console.log("press")
+
+    }
 
     render() {
+
         return (
             <div className="rounded shadow card card-body text-center">
                 <table className="table table-sm table-hover tab align-middle   ">
@@ -37,11 +43,7 @@ export class Orders extends Component {
                                 <button className="btn btn-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#s" aria-expanded="false" aria-controls="s">Details</button>
                                 <div className="collapse" id="s">
                                     {orders.products.map(prod=>(
-
                                                 <li>{prod.name} : {prod.quantity}</li>
-
-
-
                                     ))}
                                     <p className="fw-bold">Payment: {orders.payment}</p>
                                     <p className="fw-bold">Delivery: {orders.delivery}</p>
@@ -51,7 +53,7 @@ export class Orders extends Component {
                             <td className="fw-bold">${orders.total}</td>
 
                                 <td>{orders.sent? orders.received? 'Order Received':<button
-                                    onClick={this.props.orderReceived.bind(this, orders.id)}
+                                    onClick={ this.onClick(orders.id) }
                                     className="btn btn-danger btn-sm">
                                     {' '}
                                     Order Received?
