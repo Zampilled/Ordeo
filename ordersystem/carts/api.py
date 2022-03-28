@@ -55,6 +55,7 @@ class SendOrderAPI(generics.GenericAPIView):
                 'status': 'Order Doesnt Exist'
             })
 
+
 class OrderRecievedAPI(generics.GenericAPIView):
     permission_classes = [
         permissions.IsAuthenticated
@@ -119,13 +120,17 @@ class UpdateCartAPI(generics.GenericAPIView):
         if cart_qs.exists():
             cart = cart_qs[0]
             if cart.products.filter(product__pk=product.pk).exists():
-                item = cart.products.get(product = product.pk)
-                item.quantity = quantity
-                item.save()
-                return Response({"message": "Quantity Updated"
-                                 },
-                                status=status.HTTP_200_OK
-                                )
+                if quantity <= 0:
+                    item = cart.products.get(product = product.pk)
+                    item.delete()
+                else:
+                    item = cart.products.get(product = product.pk)
+                    item.quantity = quantity
+                    item.save()
+                    return Response({"message": "Quantity Updated"
+                                     },
+                                    status=status.HTTP_200_OK
+                                    )
             else:
                 return Response({"message": "Product doesnt exist",
                                  },
@@ -215,8 +220,11 @@ class CheckoutAPI(generics.GenericAPIView):
                 i=0
                 while i<cart.products.all().count():
                     order.products.create(
+                        productId=cart.products.all()[i].product.pk,
+                        image=cart.products.all()[i].image,
                         name=cart.products.all()[i].name,
                         quantity=cart.products.all()[i].quantity
+
                     )
                     i+=1
                 order.save()

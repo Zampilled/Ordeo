@@ -34,6 +34,8 @@ class Cart(models.Model):
 
 
 class OrderItem(models.Model):
+    productId = models.IntegerField(default=0)
+    image = models.ImageField(blank=True)
     name = models.CharField(max_length=100)
     quantity = models.IntegerField()
 

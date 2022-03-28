@@ -97,9 +97,9 @@ export class Products extends Component {
                             <th>Quantity</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody >
                         {this.props.products.map((product) =>  (
-                            <tr key={product.id}   >
+                            <tr key={product.id} className=""  >
 
                                 <td><img src={product.image} alt="" className="rounded"  height="60" width="auto"></img></td>
                                 <td>{product.name}</td>
@@ -119,11 +119,11 @@ export class Products extends Component {
                         ))}
                         </tbody>
                     </table>
-                    <form className="mt-2" onSubmit={e => this.onSubmit(e)}>
-                        <div className="text-end mb-2">
-                            <button type="submit" className="btn btn-primary"  >Add To Cart</button>
-                        </div>
-                    </form>
+                    <div className="d-flex flex-row justify-content-end  align-items-center bd-highlight">
+                        <form onSubmit={e => this.onSubmit(e)}>
+                                <button type="submit" className="btn btn btn-success p-2 fw-bold "  >Add To Cart</button>
+                        </form>
+                    </div>
                 </div>
             )
 

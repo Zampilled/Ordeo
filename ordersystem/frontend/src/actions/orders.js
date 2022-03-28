@@ -9,6 +9,7 @@ import {GET_ORDERS, ORDER_RECEIVED, ORDER_SEND} from "./types";
 export const getOrders = () => (dispatch, getState) => {
     axios.get('/api/orders',tokenConfig(getState))
         .then(res=>{
+
             dispatch({
                 type: GET_ORDERS,
                 payload:res.data,
@@ -19,9 +20,10 @@ export const getOrders = () => (dispatch, getState) => {
 export const orderReceived = (id) => (dispatch, getState) => {
     axios.post('/api/orders/received',{id}, tokenConfig(getState))
         .then(res =>{
+            dispatch(createMessage({productCreated: "Order Received"}))
             dispatch({
                 type: ORDER_RECEIVED,
-                payload: {id}
+                payload: id
             })
         }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
 }
@@ -39,9 +41,10 @@ export const getAdminOrders = () => (dispatch, getState) => {
 export const orderSend = (id) => (dispatch, getState) => {
     axios.post('/api/orders/admin/send',{id}, tokenConfig(getState))
         .then(res =>{
+            dispatch(createMessage({productCreated: "Order Sent"}))
             dispatch({
                 type: ORDER_SEND,
-                payload: {id}
+                payload: id
             })
         }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
 }

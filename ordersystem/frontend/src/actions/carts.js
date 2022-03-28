@@ -40,7 +40,6 @@ export const updateCart = (id, quantity) =>(dispatch, getState) =>{
     const body = JSON.stringify({id,quantity});
     axios.patch('/api/cart/order',body, tokenConfig(getState))
         .then(res=>{
-            dispatch(createMessage({productCreated: "Quantities Changed"}));
             dispatch({
                 type: UPDATE_CART
 

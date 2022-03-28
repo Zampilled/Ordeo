@@ -92,26 +92,25 @@ export class Cart extends Component {
 
 
                                 <td>
-                                    <button onClick={this.props.deleteCartItem.bind(this,cart.product)} className="btn btn-danger btn-sm">{' '}Delete</button>
+                                    <button onClick={this.props.deleteCartItem.bind(this,cart.product)} className="btn btn-danger ">{' '}Delete</button>
                                 </td>
                             </tr>
                         ))} </tbody>
                     ))}
-
-
-
                 </table>
-                <div className="text-end align-middle m-auto">
-                    <label className="label label-danger m-auto fa-bold ">Total: ${Math.round(this.props.carts.map(total =>(total.total)) * 100) / 100}</label>
+
+                <div className="d-flex flex-row justify-content-end  align-items-center bd-highlight mb-3">
+                    <label className="label label-danger p-2 fw-bold">Total: ${Math.round(this.props.carts.map(total =>(total.total)) * 100) / 100}</label>
                     <form onSubmit={e => this.onSubmit(e)}>
-                        <div className="m-auto">
-                            <button type="submit" className="btn btn-primary" >Quantity</button>
+                        <div className="p-2">
+                            <button type="submit" className="btn btn-primary" >Update Quantity</button>
                         </div>
                     </form>
 
-                        <div className="">
+                        <div className="p-2">
                             <Link to="/cart/checkout" className="btn btn-success " >Checkout</Link>
                         </div>
+
                 </div>
             </div>
 

@@ -36,7 +36,7 @@ export const addProduct = (product) => (dispatch, getState) => {
     console.log(product)
     axios.post('/api/products/',product, tokenConfig(getState))
         .then(res=>{
-            dispatch(createMessage({productCreated: "Product Created"}));
+
             dispatch({
                 type: ADD_PRODUCT,
                 payload: res.data

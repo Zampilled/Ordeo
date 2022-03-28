@@ -11,4 +11,4 @@ y - register frontend
 y - admin product adder
 y - order management backend
 y - order screen
-n - pretty clean up
+y - pretty clean up

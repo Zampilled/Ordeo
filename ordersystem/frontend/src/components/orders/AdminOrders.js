@@ -14,7 +14,13 @@ export class Orders extends Component {
     componentDidMount() {
         this.props.getAdminOrders()
     }
-
+    state = {
+        detailOrder : null
+    }
+    openModal(e){
+        this.setState({detailOrder:e })
+        console.log(this.state.detailOrder)
+    }
 
     render() {
         return (
@@ -23,47 +29,101 @@ export class Orders extends Component {
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Details</th>
                         <th>Total</th>
                         <th>Status</th>
+                        <th>Details</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {this.props.orders.map(orders => (
+                    {this.props.orders.map((orders,i) => (
 
                         <tr key={orders.id}>
 
                             <td>{orders.id}</td>
+                            <td className="fw-bold">${orders.total}</td>
                             <td>
-                                <button className="btn btn-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#s" aria-expanded="false" aria-controls="s">Details</button>
-                                <div className="collapse" id="s">
-                                    {orders.products.map(prod=>(
-
-                                        <li>{prod.name} : {prod.quantity}</li>
-
-
-
-                                    ))}
-                                    <p className="fw-bold">Payment: {orders.payment}</p>
-                                    <p className="fw-bold">Delivery: {orders.delivery}</p>
-                                </div>
+                                <button className="btn btn-info"
+                                        type="button"
+                                        onClick={() => this.openModal(i)}
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">{' '}Details</button>
 
                             </td>
-                            <td className="fw-bold">${orders.total}</td>
-
                             <td>{orders.received? 'Order Received':orders.sent? 'Order Sent':<button
-                                onClick={this.props.orderSend.bind(this, orders.id)}
-                                className="btn btn-danger btn-sm">
+                                onClick={() => this.openModal(orders.id)}
+                                className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#Order">
                                 {' '}
-                                Send Order
+                                Send Order?
                             </button>}</td>
+
+
+
+
 
                         </tr>
                     ))}
                     </tbody>
                 </table>
 
+                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel">Order Details</h5>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
+                            </div>
+                            <div className="modal-body">
+                                <div className='card rounded'>
+                                    <table className="table table-sm tab align-middle ">
+                                        <thead>
+                                        <th>Product ID</th>
+                                        <th>Image</th>
+                                        <th>Name</th>
+                                        <th>Quantity</th>
+                                        </thead>
+
+                                        {this.props.orders.slice(this.state.detailOrder, this.state.detailOrder+1)
+                                            .map(order => (<tbody key={order.id}>
+                                                {order.products.map(product =>(
+                                                    <tr key={product.id}>
+                                                        <td>{product.id}</td>
+                                                        <td><img src={product.image} alt="" className="rounded"  height="60" width="auto"></img></td>
+                                                        <td>{product.name}</td>
+                                                        <td>{product.quantity}</td>
+                                                    </tr>
+                                                ))}
+                                                </tbody>
+                                            ))}
+                                    </table>
+                                </div>
+                                <div className="card text-center">
+                                    {this.props.orders.slice(this.state.detailOrder, this.state.detailOrder+1)
+                                        .map(order =>(
+                                                <div key={order.id}>
+                                                    <h5>Delivery: {order.delivery}</h5>
+                                                    <h5>Payment: {order.payment}</h5>
+                                                    <h4 className="fw-bold">Total: ${order.total}</h4>
+                                                </div>
+                                            )
+                                        )
+                                    }
+
+                                </div>
+
+                            </div>
+                            <div className="modal-footer d-flex align-items-center justify-content-center">
+                                <button type="button" className="btn btn-secondary  "
+                                        data-bs-dismiss="modal">Close
+                                </button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
             </div>
+
         );
     }
 }

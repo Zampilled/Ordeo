@@ -2,6 +2,7 @@ import {GET_ADMIN_ORDERS, GET_ORDERS, ORDER_RECEIVED, ORDER_SEND} from "../actio
 
 const initialState = {
     orders: [],
+
 }
 
 export default function (state = initialState, action){
@@ -16,6 +17,7 @@ export default function (state = initialState, action){
         case ORDER_RECEIVED:
             return{
                 ...state,
+                orders: state.orders.filter(order => order.id !== action.payload)
             }
         default:
             return state;
