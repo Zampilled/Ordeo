@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {getOrders , orderReceived} from "../../actions/orders";
 import {Link, Redirect} from "react-router-dom";
 import {Cart} from "../carts/Cart";
-import {Collapse} from "react-collapse/lib/Collapse";
+
 
 export class Orders extends Component {
     static propTypes = {
