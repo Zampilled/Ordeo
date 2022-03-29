@@ -1,2 +1,4 @@
 release: python ordersystem/manage.py migrate
-web: gunicorn ordersystem.wsgi --log-file -
+web: python ordersystem/manage.py runserver 0.0.0.0:\$PORT
+web: npm run build
+config:set DISABLE_COLLECTSTATIC=1
