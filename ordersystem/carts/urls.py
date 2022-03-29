@@ -1,5 +1,8 @@
 from django.urls import path
-from .api import UpdateCartAPI, CartAPI, CheckoutAPI, AdminOrderAPI, SendOrderAPI, OrderAPI,OrderRecievedAPI, DeleteAll
+from .api import UpdateCartAPI, CartAPI,\
+        CheckoutAPI, AdminOrderAPI,\
+        SendOrderAPI, OrderAPI,\
+        OrderRecievedAPI, test
 
 urlpatterns = [
 
@@ -10,5 +13,6 @@ urlpatterns = [
         path('api/orders/admin/send', SendOrderAPI.as_view(), name='api-admin-send-order'),
         path('api/orders', OrderAPI.as_view(), name='api-orders-view'),
         path('api/orders/received', OrderRecievedAPI.as_view(), name='api-order-received'),
-        path('api/delete', DeleteAll.as_view(), name='api-delete')
+        path('api/test', test.as_view())
+
 ]

@@ -69,6 +69,7 @@ export const deleteCartItem = (id) =>(dispatch, getState) =>{
 
 export const checkout = (payment, delivery) =>(dispatch, getState) =>{
     //const body = JSON.stringify({payment, delivery});
+
     axios.post('/api/cart/checkout',{payment, delivery}, tokenConfig(getState))
         .then(res=>{
             dispatch(createMessage({productCreated: "Checkout Complete"}));

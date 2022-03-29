@@ -87,9 +87,6 @@ class OrderRecievedAPI(generics.GenericAPIView):
             })
 
 
-
-
-
 class CartAPI(ListAPIView):
     permission_classes = [
         permissions.IsAuthenticated
@@ -98,7 +95,6 @@ class CartAPI(ListAPIView):
 
     def get_queryset(self):
         return Cart.objects.filter(owner=self.request.user)
-
 
 
 #Add To Cart
@@ -224,11 +220,11 @@ class CheckoutAPI(generics.GenericAPIView):
                         image=cart.products.all()[i].image,
                         name=cart.products.all()[i].name,
                         quantity=cart.products.all()[i].quantity
-
                     )
                     i+=1
                 order.save()
                 cart.delete()
+                cartitem_qs.delete()
                 Cart.objects.create(owner=self.request.user)
                 return Response({'status': 'Checkout Complete'},
                                 status=status.HTTP_200_OK)
@@ -240,15 +236,8 @@ class CheckoutAPI(generics.GenericAPIView):
             return Response({'status': 'Cart Is Empty'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class DeleteAll(generics.GenericAPIView):
-    permission_classes = [
-        permissions.IsAdminUser
-    ]
-    def post(self, request):
-        CartItem.objects.all().delete()
-        Cart.objects.all().delete()
-        Order.objects.all().delete()
-        OrderItem.objects.all().delete()
-        return Response({
-            'status':'Everything gone'
-        },status=status.HTTP_200_OK)
+class test(ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = CartItemSerializer
+    def get_queryset(self):
+        return CartItem.objects.filter(owner= self.request.user)
