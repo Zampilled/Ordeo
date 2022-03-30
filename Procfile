@@ -1,2 +1,2 @@
 release: python ordersystem/manage.py migrate
-web: gunicorn ordersystem.wsgi --cd=ordersystem
+web: gunicorn ordersystem.wsgi --chdir=/app/ordersystem/
