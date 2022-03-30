@@ -1,7 +1,4 @@
 
-
-
-
 """
 WSGI config for ordersystem project.
 
