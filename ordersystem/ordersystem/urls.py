@@ -7,7 +7,7 @@ urlpatterns = [
     path('', include('products.urls')),
     path('', include('accounts.urls')),
     path('', include('carts.urls')),
-    path('', include('swagger.urls')),
+
 
     ]
 if settings.DEBUG:
