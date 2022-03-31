@@ -1,14 +1,7 @@
-13/03/22 Todo list
+31/03/22
 
+Deployment to-do
 
-y - sort out git
-y - quantity changer
-y - checkout api
-y - checkout frontend
-y - admin backend
-y - register backend
-y - register frontend
-y - admin product adder
-y - order management backend
-y - order screen
-y - pretty clean up
+y-Fix cart
+n-Fix mobile view
+n-Fix images

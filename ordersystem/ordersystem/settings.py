@@ -21,8 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-#MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles/rest_framework')
+MEDIA_URL = '/staticfiles/rest_framework/'
 # 'http://myhost:port/media/'
 
 
@@ -33,7 +33,7 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 SECRET_KEY = 'django-insecure-*5g0gzskkk*v8!^d7&jbsl7f=!#7*b=@x&5!#8ict4pnagup1i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['ordeo.herokuapp.com', '127.0.0.1']
 

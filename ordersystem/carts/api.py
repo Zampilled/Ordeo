@@ -236,8 +236,3 @@ class CheckoutAPI(generics.GenericAPIView):
             return Response({'status': 'Cart Is Empty'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class test(ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]
-    serializer_class = CartItemSerializer
-    def get_queryset(self):
-        return CartItem.objects.filter(owner= self.request.user)

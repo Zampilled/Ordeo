@@ -11,7 +11,7 @@ class CartItem(models.Model):
     quantity = models.IntegerField(default=1)
     ordered = models.BooleanField(default=False)
     name = models.CharField(max_length=100)
-    image = models.ImageField(blank=True, upload_to='ordersystem/staticfiles/rest_framework/img/' )
+    image = models.ImageField(blank=True)
     price = models.FloatField()
     description = models.CharField(max_length=50, blank=True)
 

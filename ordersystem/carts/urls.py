@@ -2,7 +2,7 @@ from django.urls import path
 from .api import UpdateCartAPI, CartAPI,\
         CheckoutAPI, AdminOrderAPI,\
         SendOrderAPI, OrderAPI,\
-        OrderRecievedAPI, test
+        OrderRecievedAPI
 
 urlpatterns = [
 
@@ -13,6 +13,6 @@ urlpatterns = [
         path('api/orders/admin/send', SendOrderAPI.as_view(), name='api-admin-send-order'),
         path('api/orders', OrderAPI.as_view(), name='api-orders-view'),
         path('api/orders/received', OrderRecievedAPI.as_view(), name='api-order-received'),
-        path('api/test', test.as_view())
+
 
 ]
