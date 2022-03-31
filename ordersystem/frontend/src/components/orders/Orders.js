@@ -32,15 +32,14 @@ export class Orders extends Component {
 
         return (
             <div className="col-auto d-flex align-items-center flex-row justify-content-center">
-            <div className="rounded shadow card card-body text-center">
-                <table className="table table-sm table-hover tab align-middle   ">
+            <div className="rounded shadow card card-body text-center border-primary mt-2">
+                <table className="table table-sm table-hover tab align-middle ">
                     <thead>
                     <tr>
                         <th>Order ID</th>
                         <th>Total</th>
                         <th>Status</th>
                         <th>Details</th>
-
                     </tr>
                     </thead>
                     <tbody>
@@ -73,7 +72,7 @@ export class Orders extends Component {
                 <div className="modal fade" id="exampleModal" tabIndex="-1"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
-                        <div className="modal-content">
+                        <div className="modal-content border-info">
                             <div className="modal-header">
                                 <h5 className="modal-title" id="exampleModalLabel">Order Details</h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
@@ -102,7 +101,7 @@ export class Orders extends Component {
                                     ))}
                                 </table>
                                 </div>
-                                <div className="card text-center">
+                                <div className="card text-center mt-2 ">
                                     {this.props.orders.slice(this.state.detailOrder, this.state.detailOrder+1)
                                         .map(order =>(
                                             <div key={order.id}>
@@ -127,21 +126,21 @@ export class Orders extends Component {
 
                     </div>
                 </div>
-                <div className="modal fade" id="Order" tabIndex="-1"
+                <div className="modal fade " id="Order" tabIndex="-1"
                      aria-labelledby="Order" aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
+                    <div className="modal-dialog ">
+                        <div className="modal-content border-danger ">
+                            <div className="modal-header ">
                                 <h5 className="modal-title" id="Order">Conformation Box</h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
                             </div>
-                            <div className="modal-body">
+                            <div className="modal-body ">
                                 <h4>Are You Sure?</h4>
 
 
                             </div>
                             <div className="modal-footer d-flex align-items-center justify-content-center">
-                                <button type="button" className="btn btn-secondary  "
+                                <button type="button" className="btn btn-secondary   "
                                         data-bs-dismiss="modal">Close
                                 </button>
                                 <button type="button" className="btn btn-success fw-bold" data-bs-dismiss="modal" onClick={() => this.onClick(this.state.detailOrder)}>Confirm</button>

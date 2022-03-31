@@ -58,8 +58,8 @@ export class Cart extends Component {
 
         return (
 
-            <div className="rounded shadow ">
-                <table className="table table-sm table-hover tab align-middle ">
+            <div className="rounded shadow card card-body border-primary mt-2">
+                <table className="table table-sm table-hover tab align-middle  ">
                     <thead>
                     <tr>
                         <th>Image</th>

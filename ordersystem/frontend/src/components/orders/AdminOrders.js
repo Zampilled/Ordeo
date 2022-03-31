@@ -29,8 +29,8 @@ export class Orders extends Component {
 
     render() {
         return (
-            <div className="rounded shadow card card-body text-center">
-                <table className="table table-sm table-hover tab align-middle   ">
+            <div className="rounded shadow card card-body text-center border-primary mt-2">
+                <table className="table table-sm table-hover tab align-middle">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -65,7 +65,7 @@ export class Orders extends Component {
                 </table>
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
-                        <div className="modal-content">
+                        <div className="modal-content border-info">
                             <div className="modal-header">
                                 <h5 className="modal-title" id="exampleModalLabel">Order Details</h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
@@ -94,7 +94,7 @@ export class Orders extends Component {
                                             ))}
                                     </table>
                                 </div>
-                                <div className="card text-center">
+                                <div className="card text-center mt-2">
                                     {this.props.orders.slice(this.state.detailOrder, this.state.detailOrder+1)
                                         .map(order =>(
                                                 <div key={order.id}>
@@ -122,7 +122,7 @@ export class Orders extends Component {
                 <div className="modal fade" id="Order" tabIndex="-1"
                      aria-labelledby="Order" aria-hidden="true">
                     <div className="modal-dialog">
-                        <div className="modal-content">
+                        <div className="modal-content border-danger">
                             <div className="modal-header">
                                 <h5 className="modal-title" id="Order">Conformation Box</h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"/>

@@ -44,7 +44,7 @@ export class Checkout extends Component {
         else {
             return (
 
-                <div className="col-md-6  card m-auto shadow car">
+                <div className="col-md-6  card m-auto shadow car border-success mt-2">
                     <div className=" card-body  m-3 text-center">
                         <h2 className="text-center">Checkout</h2>
                         <h3 className=" m-auto fw-bold text-centre">Total: ${Math.round(this.props.carts.map(total =>(total.total)) * 100) / 100}</h3>
@@ -74,7 +74,7 @@ export class Checkout extends Component {
                             <div className="modal fade" id="exampleModal" tabIndex="-1"
                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div className="modal-dialog">
-                                    <div className="modal-content">
+                                    <div className="modal-content border-danger">
                                         <div className="modal-header">
                                             <h5 className="modal-title" id="exampleModalLabel">Checkout</h5>
                                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"/>

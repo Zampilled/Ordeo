@@ -1,7 +1,0 @@
-31/03/22
-
-Deployment to-do
-
-y-Fix cart
-n-Fix mobile view
-n-Fix images
