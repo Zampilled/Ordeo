@@ -6,5 +6,5 @@
 
 >**View on Desktop for best viewing experience**
 > 
-> [Live Demo](zamolo.herokuapp.com)
+> [Live Demo](https://zamolo.herokuapp.com/#/login)
 >
