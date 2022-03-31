@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development --watch ./ordersystem/frontend/src/index.js --output-path ./ordersystem/frontend/static/frontend",
-    "build": "webpack --mode production ./ordersystem/frontend/src/index.js --output-path ./ordersystem/frontend/static/frontend"
+    "dev": "webpack --mode development --watch ordeo/frontend/src/index.js --output-path ordeo/frontend/static/frontend",
+    "build": "webpack --mode production ordeo/frontend/src/index.js --output-path ordeo/frontend/static/frontend"
   },
   "keywords": [],
   "author": "",
