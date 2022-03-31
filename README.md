@@ -11,4 +11,4 @@
 ## API Documentation
 >**API Documentation available on Swagger**
 > 
-> [API Documentation](https://zamolo.herokuapp.com/#/login)
+> [API Documentation](https://zamolo.herokuapp.com/api/swagger)
