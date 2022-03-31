@@ -2,9 +2,11 @@
 
 > An inventory ordering full stack app using React/Redux/Django'
 
-## **Demo**
+## Demo
 
->**View on Desktop for best viewing experience**
+>**View on Desktop for best viewing experience** 
 > 
 > [Live Demo](https://zamolo.herokuapp.com/#/login)
->
+
+## API Documentation
+>**API Documentation available on **
