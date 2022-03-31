@@ -12,7 +12,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             self.permission_classes = [permissions.IsAuthenticated]
         else:
-            self.permission_classes = [permissions.IsAdminUser]
+            self.permission_classes = [permissions.NOT]
         return super(ProductViewSet, self).get_permissions()        
 
     def get_queryset(self):

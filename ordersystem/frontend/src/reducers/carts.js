@@ -2,7 +2,6 @@ import {DELETE_CART_ITEM, GET_CART, UPDATE_CART, ADD_TO_CART, CHECKOUT} from '..
 
 const initialState = {
     carts : [],
-
 }
 
 export default function (state = initialState, action){
@@ -16,7 +15,7 @@ export default function (state = initialState, action){
         case CHECKOUT:
             return {
                 ...state,
-                carts: null
+                carts: []
             }
         case ADD_TO_CART:
             return{

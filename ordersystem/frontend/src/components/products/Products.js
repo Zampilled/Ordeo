@@ -52,6 +52,11 @@ export class Products extends Component {
     render() {
         const {quantity} = this.state
         const adminProducts = (
+            <div>
+                <div className="alert alert-warning alert-dismissable fade show d-flex justify-content-between mt-2" role="alert">
+                    To preserve the integrity of the web demo product adding and deleting has been restricted
+                    <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             <div className="card card-body border-primary rounded shadow mt-2">
                 <table className="table table-sm table-hover tab align-middle ">
                     <thead>
@@ -83,6 +88,7 @@ export class Products extends Component {
                     </tbody>
                 </table>
 
+            </div>
             </div>
         );
             const userProducts= (

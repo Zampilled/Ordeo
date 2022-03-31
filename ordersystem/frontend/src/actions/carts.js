@@ -23,7 +23,7 @@ export const addToCart = (id, quantity) =>(dispatch, getState) =>{
     axios.post('/api/cart/order',body, tokenConfig(getState))
 
         .then(res=>{
-            dispatch(createMessage({productCreated: "Products Added"}));
+
             console.log(res)
             //dispatch(createMessage({productCreated: "Added to Cart"}));
             dispatch({
