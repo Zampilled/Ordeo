@@ -8,7 +8,7 @@ User = get_user_model()
 class CartItem(models.Model):
     owner = models.ForeignKey(User , on_delete=models.CASCADE, blank=True, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
+    quantity = models.PositiveIntegerField(default=1)
     ordered = models.BooleanField(default=False)
     name = models.CharField(max_length=100)
     image = models.ImageField(blank=True)

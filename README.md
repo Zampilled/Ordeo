@@ -1,6 +1,6 @@
 # **Ordeo**
 
-> An inventory ordering full stack app using React/Redux/Django'
+> An inventory ordering full stack app using React/Redux/Django
 
 ## Demo
 
@@ -9,4 +9,6 @@
 > [Live Demo](https://zamolo.herokuapp.com/#/login)
 
 ## API Documentation
->**API Documentation available on **
+>**API Documentation available on Swagger**
+> 
+> [API Documentation](https://zamolo.herokuapp.com/#/login)
