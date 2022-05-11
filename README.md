@@ -4,11 +4,11 @@
 
 ## Demo
 
->**View on Desktop for best viewing experience** 
+>**View on Desktop for best viewing experience.** 
 > 
 > [Live Demo](https://zamolo.herokuapp.com/#/login)
 
 ## API Documentation
->**API Documentation available on Swagger**
+>**API Documentation available on Swagger.**
 > 
 > [API Documentation](https://zamolo.herokuapp.com/api/swagger)
